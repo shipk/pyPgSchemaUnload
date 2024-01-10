@@ -52,7 +52,7 @@ mend_dump5 = re.compile('--')
 ###############################################################################################
 #--
 #-- TOC entry 1 (class 3079 OID 13223)
-#-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+#-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
 #--
 mext1 = re.compile('--')
 mext2 = re.compile('-- TOC entry \d+ \(class \d+ OID \d+\)')
@@ -64,7 +64,7 @@ mext4 = re.compile('--')
 #--
 #-- TOC entry 5621 (class 0 OID 0)
 #-- Dependencies: 1
-#-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+#-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
 #--
 mext_comm1 = re.compile('--')
 mext_comm2 = re.compile('-- TOC entry \d+ \(class \d+ OID \d+\)')
@@ -110,7 +110,7 @@ macl3 = re.compile('-- Dependencies: \d+')
 macl4 = re.compile('-- Name: ([\w-]+); Type: ACL; Schema: ([\w-]+); Owner: (.*)')
 macl5 = re.compile('--')
 
-# Constgraint
+# Constraint
 ###############################################################################################
 #--
 #-- TOC entry 3979 (class 2606 OID 47521)
@@ -140,7 +140,7 @@ mtab_fk_constr4 = re.compile('--')
 #--
 mfunc1 = re.compile('--')
 mfunc2 = re.compile('-- TOC entry \d+ \(class \d+ OID \d+\)')
-mfunc3 = re.compile('-- Name: ([\w-]+)\(.*\); Type: FUNCTION; Schema: ([\w-]+); Owner: (.*)')
+mfunc3 = re.compile('-- Name: ([\w-]+)\(.*\); Type: (FUNCTION|PROCEDURE); Schema: ([\w-]+); Owner: (.*)')
 mfunc4 = re.compile('--')
 
 # Function grants
@@ -166,7 +166,7 @@ mfunc_acl5 = re.compile('--')
 mcol_comment1 = re.compile('--')
 mcol_comment2 = re.compile('-- TOC entry \d+ \(class \d+ OID \d+\)')
 mcol_comment3 = re.compile('-- Dependencies: \d+')
-mcol_comment4 = re.compile('-- Name: COLUMN ([\"\w-]+).([\w-]+); Type: COMMENT; Schema: ([\w-]+); Owner: (.*)')
+mcol_comment4 = re.compile('-- Name: COLUMN ([\"\w-]+).([\"\w-]+); Type: COMMENT; Schema: ([\w-]+); Owner: (.*)')
 mcol_comment5 = re.compile('--')
 
 # sequence
@@ -285,6 +285,64 @@ mseq_comment3 = re.compile('-- Dependencies: \d+')
 mseq_comment4 = re.compile('-- Name: SEQUENCE ([\w-]+); Type: COMMENT; Schema: ([\w-]+); Owner: (.*)')
 mseq_comment5 = re.compile('--')
 
+# Table partition
+###############################################################################################
+#--
+#-- TOC entry 6431 (class 0 OID 0)
+#-- Name: kpi_application_float_nsr_2021; Type: TABLE ATTACH; Schema: eff; Owner: -
+#--
+mtab_partition1 = re.compile('--')
+mtab_partition2 = re.compile('-- TOC entry \d+ \(class \d+ OID \d+\)')
+mtab_partition3 = re.compile('-- Name: ([\w-]+); Type: TABLE ATTACH; Schema: ([\w-]+); Owner: (.*)')
+mtab_partition4 = re.compile('--')
+
+# View column comment
+###############################################################################################
+# --
+# -- TOC entry 11339 (class 0 OID 0)
+# -- Dependencies: 749
+# -- Name: VIEW port_facility_vw; Type: COMMENT; Schema: infr; Owner: -
+# --
+mview_col_comment1 = re.compile('--')
+mview_col_comment2 = re.compile('-- TOC entry \d+ \(class \d+ OID \d+\)')
+mview_col_comment3 = re.compile('-- Dependencies: \d+')
+mview_col_comment4 = re.compile('-- Name: VIEW ([\w-]+); Type: COMMENT; Schema: ([\w-]+); Owner: (.*)')
+mview_col_comment5 = re.compile('--')
+
+# Index attach
+###############################################################################################
+# --
+# -- TOC entry 9092 (class 0 OID 0)
+# -- Name: kpi_disp_message_2019_ship_fk_doc_date_idx; Type: INDEX ATTACH; Schema: eff; Owner: -
+# --
+mind_partition1 = re.compile('--')
+mind_partition2 = re.compile('-- TOC entry \d+ \(class \d+ OID \d+\)')
+mind_partition3 = re.compile('-- Name: ([\w-]+); Type: INDEX ATTACH; Schema: ([\w-]+); Owner: (.*)')
+mind_partition4 = re.compile('--')
+
+# Schema
+###############################################################################################
+# --
+# -- TOC entry 13 (class 2615 OID 20683)
+# -- Name: etp; Type: SCHEMA; Schema: -; Owner: -
+# --
+mschema1 = re.compile('--')
+mschema2 = re.compile('-- TOC entry \d+ \(class \d+ OID \d+\)')
+mschema3 = re.compile('-- Name: ([\w-]+); Type: SCHEMA; Schema: ([\w-]+); Owner: (.*)')
+mschema4 = re.compile('--')
+
+# Procedure comment
+###############################################################################################
+# --
+# -- TOC entry 10094 (class 0 OID 0)
+# -- Dependencies: 1585
+# -- Name: PROCEDURE refman_get_selection_sp(IN v_tab_code character varying, INOUT ref refcursor, IN v_uuid uuid); Type: COMMENT; Schema: rel; Owner: -
+# --
+mproc_comment1 = re.compile('--')
+mproc_comment2 = re.compile('-- TOC entry \d+ \(class \d+ OID \d+\)')
+mproc_comment3 = re.compile('-- Dependencies: \d+')
+mproc_comment4 = re.compile('-- Name: (PROCEDURE|FUNCTION) ([\w-]+)\(.*\); Type: COMMENT; Schema: ([\w-]+); Owner: (.*)')
+mproc_comment5 = re.compile('--')
 
 def parse_dump_file(dump_file, debug):
 	"""
@@ -302,7 +360,7 @@ def parse_dump_file(dump_file, debug):
 
 	# Номер текущей прочитанной строки
 	line_no = 0
-	
+
 	# Текущий разбираемый блок с описанием объекта БД
 	b_no = 0
 	e_no = 0
@@ -312,9 +370,9 @@ def parse_dump_file(dump_file, debug):
 	L = []
 
 	# Сюда заносим с нулём номера строк для начала блоков и помечаем единицей те, которые удалось распарсить
-	SBL = {} 
+	SBL = {}
 
-	for line in open(dump_file, "r"):
+	for line in open(dump_file, mode="r", encoding="utf-8"):
 		line_no += 1
 		end_block = False
 		#print(line, end='')
@@ -344,16 +402,17 @@ def parse_dump_file(dump_file, debug):
 
 		if end_block:
 			L.append((name, b_no, e_no))
-				
+
 		mo1 = mtable1.match(s_p3)
 		mo2 = mtable2.match(s_p2)
 		mo3 = mtable3.match(s_p1)
 		mo4 = mtable4.match(line)
 		if mo1 and mo2 and mo3 and mo4:
-			#print(mo3.group(1), end=" Table\n")
+			#print(mo3.group(2), mo3.group(1), end=" Table\n")
 			b_no = line_no + 1
-			name = "{0}.tab".format(mo3.group(1))
+			name = "{0}.{1}".format(mo3.group(2), mo3.group(1))
 			SBL[line_no-3] = 1
+			#print(name, end=" Table\n")
 
 		mo1 = mtab_comment1.match(s_p4)
 		mo2 = mtab_comment2.match(s_p3)
@@ -363,8 +422,9 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4 and mo5:
 			#print(mo4.group(1), end=" Comment\n")
 			b_no = line_no + 1
-			name = "{0}.tab".format(mo4.group(1))
+			name = "{0}.{1}".format(mo4.group(2), mo4.group(1))
 			SBL[line_no-4] = 1
+			#print(name, end=" Table comment\n")
 
 		mo1 = macl1.match(s_p4)
 		mo2 = macl2.match(s_p3)
@@ -374,7 +434,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4 and mo5:
 			#print(mo4.group(1), end=" ACL\n")
 			b_no = line_no + 1
-			name = "{0}.acl".format(mo4.group(1))
+			name = "{0}.{1}".format(mo4.group(2), mo4.group(1))
 			SBL[line_no-4] = 1
 
 		mo1 = mtab_constr1.match(s_p3)
@@ -384,7 +444,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4:
 			#print(mo3.group(1), end=" Constraint\n")
 			b_no = line_no + 1
-			name = "{0}.tab".format(mo3.group(1))
+			name = "{0}.{1}".format(mo3.group(3), mo3.group(1))
 			SBL[line_no-3] = 1
 
 		mo1 = mtab_fk_constr1.match(s_p3)
@@ -394,7 +454,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4:
 			#print(mo3.group(1), end=" FK constraint\n")
 			b_no = line_no + 1
-			name = "{0}.tab".format(mo3.group(1))
+			name = "{0}.{1}".format(mo3.group(3), mo3.group(1))
 			SBL[line_no-3] = 1
 
 		mo1 = mfunc1.match(s_p3)
@@ -404,7 +464,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4:
 			#print(mo3.group(1), end=" Function\n")
 			b_no = line_no + 1
-			name = "{0}.fnc".format(mo3.group(1))
+			name = "{0}.{1}".format(mo3.group(3), mo3.group(1))
 			SBL[line_no-3] = 1
 
 		mo1 = mfunc_acl1.match(s_p4)
@@ -415,7 +475,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4 and mo5:
 			#print(mo4.group(1), end=" func ACL\n")
 			b_no = line_no + 1
-			name = "{0}.facl".format(mo4.group(1))
+			name = "{0}.{1}".format(mo4.group(3), mo4.group(1))
 			SBL[line_no-4] = 1
 
 		mo1 = mcol_comment1.match(s_p4)
@@ -426,7 +486,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4 and mo5:
 			#print(mo4.group(1), end=" func ACL\n")
 			b_no = line_no + 1
-			name = "{0}.tab".format(mo4.group(1))
+			name = "{0}.{1}".format(mo4.group(3), mo4.group(1))
 			SBL[line_no-4] = 1
 
 		mo1 = mseq1.match(s_p3)
@@ -436,7 +496,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4:
 			#print(mo3.group(1), end=" Function\n")
 			b_no = line_no + 1
-			name = "{0}.seq".format(mo3.group(1))
+			name = "{0}.{1}".format(mo3.group(2), mo3.group(1))
 			SBL[line_no-3] = 1
 
 		mo1 = mseq_owned1.match(s_p4)
@@ -447,7 +507,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4 and mo5:
 			#print(mo4.group(1), end=" func ACL\n")
 			b_no = line_no + 1
-			name = "{0}.seq".format(mo4.group(1))
+			name = "{0}.{1}".format(mo4.group(2), mo4.group(1))
 			SBL[line_no-4] = 1
 
 		mo1 = mtrigger1.match(s_p3)
@@ -457,7 +517,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4:
 			#print(mo3.group(1), end=" Function\n")
 			b_no = line_no + 1
-			name = "{0}.tab".format(mo3.group(1))
+			name = "{0}.{1}".format(mo3.group(3), mo3.group(1))
 			SBL[line_no-3] = 1
 
 		mo1 = mview1.match(s_p3)
@@ -467,7 +527,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4:
 			#print(mo3.group(1), end=" Function\n")
 			b_no = line_no + 1
-			name = "{0}.vw".format(mo3.group(1))
+			name = "{0}.{1}".format(mo3.group(2), mo3.group(1))
 			SBL[line_no-3] = 1
 
 		mo1 = midx1.match(s_p3)
@@ -477,7 +537,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4:
 			#print(mo3.group(1), end=" Function\n")
 			b_no = line_no + 1
-			name = "{0}.idx".format(mo3.group(1))
+			name = "{0}.indexes".format(mo3.group(2))
 			SBL[line_no-3] = 1
 
 		mo1 = mconstr_comment1.match(s_p4)
@@ -488,7 +548,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4 and mo5:
 			#print(mo4.group(1), end=" func ACL\n")
 			b_no = line_no + 1
-			name = "{0}.tab".format(mo4.group(2))
+			name = "{0}.{1}".format(mo4.group(3), mo4.group(1))
 			SBL[line_no-4] = 1
 
 		mo1 = mmat_view1.match(s_p3)
@@ -498,7 +558,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4:
 			#print(mo3.group(1), end=" Function\n")
 			b_no = line_no + 1
-			name = "{0}.mvw".format(mo3.group(1))
+			name = "{0}.{1}".format(mo3.group(2), mo3.group(1))
 			SBL[line_no-3] = 1
 
 		mo1 = mdefault1.match(s_p3)
@@ -508,7 +568,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4:
 			#print(mo3.group(1), end=" Function\n")
 			b_no = line_no + 1
-			name = "{0}.tab".format(mo3.group(1))
+			name = "{0}.{1}".format(mo3.group(3), mo3.group(1))
 			SBL[line_no-3] = 1
 
 		mo1 = mrule1.match(s_p3)
@@ -518,7 +578,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4:
 			#print(mo3.group(1), end=" Function\n")
 			b_no = line_no + 1
-			name = "{0}.tab".format(mo3.group(1))
+			name = "{0}.{1}".format(mo3.group(3), mo3.group(1))
 			SBL[line_no-3] = 1
 
 		mo1 = mext1.match(s_p3)
@@ -528,7 +588,7 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4:
 			#print(mo3.group(1), end=" Function\n")
 			b_no = line_no + 1
-			name = "{0}.ext".format(mo3.group(1))
+			name = "aaa_ext"
 			SBL[line_no-3] = 1
 
 		mo1 = mext_comm1.match(s_p4)
@@ -539,9 +599,9 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4 and mo5:
 			#print(mo3.group(1), end=" Function\n")
 			b_no = line_no + 1
-			name = "{0}.ext".format(mo4.group(1))
+			name = "aaa_ext"
 			SBL[line_no-4] = 1
-			
+
 		mo1 = mseq_comment1.match(s_p4)
 		mo2 = mseq_comment2.match(s_p3)
 		mo3 = mseq_comment3.match(s_p2)
@@ -550,8 +610,61 @@ def parse_dump_file(dump_file, debug):
 		if mo1 and mo2 and mo3 and mo4 and mo5:
 			#print(mo3.group(1), end=" Function\n")
 			b_no = line_no + 1
-			name = "{0}.seq".format(mo4.group(1))
+			name = "{0}.{1}_seq".format(mo4.group(2), mo4.group(1))
 			SBL[line_no-4] = 1
+
+		mo1 = mtab_partition1.match(s_p3)
+		mo2 = mtab_partition2.match(s_p2)
+		mo3 = mtab_partition3.match(s_p1)
+		mo4 = mtab_partition4.match(line)
+		if mo1 and mo2 and mo3 and mo4:
+			#print(mo3.group(1), end=" Function\n")
+			b_no = line_no + 1
+			name = "{0}.partitions".format(mo3.group(2))
+			SBL[line_no-3] = 1
+
+		mo1 = mind_partition1.match(s_p3)
+		mo2 = mind_partition2.match(s_p2)
+		mo3 = mind_partition3.match(s_p1)
+		mo4 = mind_partition4.match(line)
+		if mo1 and mo2 and mo3 and mo4:
+			#print(mo3.group(1), end=" Function\n")
+			b_no = line_no + 1
+			name = "{0}.partitions".format(mo3.group(2))
+			SBL[line_no-3] = 1
+
+		mo1 = mview_col_comment1.match(s_p4)
+		mo2 = mview_col_comment2.match(s_p3)
+		mo3 = mview_col_comment3.match(s_p2)
+		mo4 = mview_col_comment4.match(s_p1)
+		mo5 = mview_col_comment5.match(line)
+		if mo1 and mo2 and mo3 and mo4 and mo5:
+			#print(mo3.group(1), end=" Function\n")
+			b_no = line_no + 1
+			name = "{0}.{1}".format(mo4.group(2), mo4.group(1))
+			SBL[line_no-4] = 1
+
+		mo1 = mschema1.match(s_p3)
+		mo2 = mschema2.match(s_p2)
+		mo3 = mschema3.match(s_p1)
+		mo4 = mschema4.match(line)
+		if mo1 and mo2 and mo3 and mo4:
+			#print(mo3.group(1), end=" Function\n")
+			b_no = line_no + 1
+			name = "aaa_schemas"
+			SBL[line_no-3] = 1
+
+		mo1 = mproc_comment1.match(s_p4)
+		mo2 = mproc_comment2.match(s_p3)
+		mo3 = mproc_comment3.match(s_p2)
+		mo4 = mproc_comment4.match(s_p1)
+		mo5 = mproc_comment5.match(line)
+		if mo1 and mo2 and mo3 and mo4 and mo5:
+			#print(mo3.group(1), end=" Function\n")
+			b_no = line_no + 1
+			name = "{0}.{1}".format(mo4.group(3), mo4.group(2))
+			SBL[line_no-4] = 1
+			#rint(name, end=" Function\n")
 
 		s_p5 = s_p4
 		s_p4 = s_p3
@@ -578,19 +691,19 @@ def create_descr(L, dir_name, dump_file, debug):
 
 	if not os.path.exists(dir_name):
 		os.makedirs(dir_name)
-	file = open(dump_file, "r")
+	file = open(dump_file, mode="r", encoding="utf-8")
 
 	for x in L:
 		if debug: print("{0} {1} {2}".format(x[0], x[1], x[2]))
 		while dump_file_line_no < x[1]:
 			dump_file_line_no += 1
 			s = file.readline()
-		fname = os.path.join(dir_name, x[0].replace('"',''))
+		fname = os.path.join(dir_name, x[0].replace('"','') + ".sql")
 		if not fname in D:
-			fo = open(fname, "w")
+			fo = open(fname, mode="w", encoding="utf-8")
 			D[fname] = 1
 		else:
-			fo = open(fname, "a")
+			fo = open(fname, mode="a", encoding="utf-8")
 		out_lines = []			
 		while dump_file_line_no <= x[2]:
 			out_lines.append(s)
